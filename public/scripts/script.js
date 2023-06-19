@@ -24,14 +24,8 @@ btnForm.addEventListener('click', async(e) => {
     )
 
 
-    if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-    } else {
-        console.log('Error Reg');
-    }
     const data = await response.json()
- 
+    console.log(data)
     
 })
 
@@ -50,13 +44,10 @@ btnFormAuth.addEventListener('click', async(e) => {
         },
         body: JSON.stringify(body)}
     )
-    if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-    } else {
-        console.log('Error Auth');
-    }
 
+
+    const data = await response.json()
+    console.log(data)
 
 
 })
@@ -76,13 +67,14 @@ btnNotes.addEventListener('click', async(e) => {
         },
         body: JSON.stringify(body1)}
     )
-    if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-    } else {
-        console.log('User notes not found');
-    }
-   
+    // if (response.ok) {
+    //     const data = await response.json();
+    //     console.log(data); 
+    //   } else {
+    //     console.log('User notes not found');
+    //   }
+    const data = await response.json()
+    console.log(data)
 
 
     divNotesIn.innerHTML = ''
@@ -95,3 +87,4 @@ btnNotes.addEventListener('click', async(e) => {
 
    
 })
+
