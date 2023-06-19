@@ -9,12 +9,10 @@ const formAuth = document.querySelector('#formAuth')
 
 
 btnForm.addEventListener('click', async(e) => {
-    // console.log('qqq')
     e.preventDefault()
-    
     const body = Object.fromEntries(new FormData(formRegistration).entries())
 
-    const response = await fetch('/json/new', {
+    const response = await fetch('/json/newUser', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -23,17 +21,12 @@ btnForm.addEventListener('click', async(e) => {
         body: JSON.stringify(body)}
     )
 
-
     const data = await response.json()
     console.log(data)
-    
 })
 
 btnFormAuth.addEventListener('click', async(e) => {
     e.preventDefault()
-    console.log('auth')
-    
-    
     const body = Object.fromEntries(new FormData(formAuth).entries())
 
     const response = await fetch('/json/auth/:id', {
@@ -45,17 +38,12 @@ btnFormAuth.addEventListener('click', async(e) => {
         body: JSON.stringify(body)}
     )
 
-
     const data = await response.json()
     console.log(data)
-
-
 })
 
 btnNotes.addEventListener('click', async(e) => {
     e.preventDefault()
-    console.log('aaa')
-    
     const formNotes = document.querySelector('#formNotes')
     const body1 = Object.fromEntries(new FormData(formNotes).entries())
 
@@ -67,24 +55,46 @@ btnNotes.addEventListener('click', async(e) => {
         },
         body: JSON.stringify(body1)}
     )
-    // if (response.ok) {
-    //     const data = await response.json();
-    //     console.log(data); 
-    //   } else {
-    //     console.log('User notes not found');
-    //   }
+   
     const data = await response.json()
     console.log(data)
-
-
+     
     divNotesIn.innerHTML = ''
     for (let post of data) {
-        divNotesIn.innerHTML +=
-        `<p>Title: ${post.title} Body: ${post.body}</p> 
-        <button onclick="btnDelete()">delete</button>
-        <hr>`
-    }
+        const noteId = Object.keys(data).find(key => data[key] === post);
+        let noteTitle = `${post.title}`
+        let noteBody = `${post.body}`
+        let note = {'noteId': noteId, 'noteTitle': noteTitle, 'noteBody': noteBody}
+        console.log(note)
 
-   
+        divNotesIn.innerHTML +=
+        `<div id="divNotesIn-${noteId}">
+        <p>Title: ${noteTitle} Body: ${noteBody}</p> 
+        <button onclick="btnDeleteNote('${noteId}')">delete</button>
+        <hr>
+        </div`
+    }
 })
 
+async function btnDeleteNote(noteId) {
+    try {    
+        const response = await fetch(`/json/delete/${noteId}`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+        })
+
+        if (response.ok) {
+            console.log('Заметка удалена');
+            const divRemove = document.querySelector(`#divNotesIn-${noteId}`)
+            divRemove.innerHTML = ''
+        } else {
+            console.log('Не получилось удалить');
+        }
+    
+    } catch (error) {
+        console.log('Ошибка:', error);
+    };
+}
