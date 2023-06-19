@@ -24,8 +24,14 @@ btnForm.addEventListener('click', async(e) => {
     )
 
 
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+    } else {
+        console.log('Error Reg');
+    }
     const data = await response.json()
-    console.log(data)
+ 
     
 })
 
@@ -44,10 +50,13 @@ btnFormAuth.addEventListener('click', async(e) => {
         },
         body: JSON.stringify(body)}
     )
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+    } else {
+        console.log('Error Auth');
+    }
 
-
-    const data = await response.json()
-    console.log(data)
 
 
 })
@@ -67,14 +76,13 @@ btnNotes.addEventListener('click', async(e) => {
         },
         body: JSON.stringify(body1)}
     )
-    // if (response.ok) {
-    //     const data = await response.json();
-    //     console.log(data); // Обработка полученных данных пользователя
-    //   } else {
-    //     console.log('User notes not found');
-    //   }
-    const data = await response.json()
-    console.log(data)
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+    } else {
+        console.log('User notes not found');
+    }
+   
 
 
     divNotesIn.innerHTML = ''
@@ -87,29 +95,3 @@ btnNotes.addEventListener('click', async(e) => {
 
    
 })
-
-// btnDelete.addEventListener('click', async (e) => {
-//     e.preventDefault();
-  
-   
-//     const response = await fetch(`/json/notes`, {
-//       method: 'DELETE',
-//     });
-  
-//     const data = await response.json();
-//     console.log(data);
-  
-
-//   });
-
-// function deletePost(id) {
-//     fetch(`http://localhost:8080/json/delete/${id}`, {
-//       method: `DELETE`,
-//       headers: {
-//         "Content-Type": "application/json",
-//         Accept: "application/json",
-//       },
-//     });
-//     console.log('delete')
-//     asd()
-//   }
